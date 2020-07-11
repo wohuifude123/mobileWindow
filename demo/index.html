@@ -14,29 +14,14 @@
     <!-- 引入样式和js文件 -->
     <link rel="stylesheet" type="text/css" href="../assets/styles/mobileWindow.css">
     <script src="../assets/scripts/mobileWindow.js" type="text/javascript"></script>
-    <style>
-        #trigger6 {
-            display: flex;
-            justify-content: center;
-        }
-
-        #house-floor-container {
-            width: 50%;
-        }
-
-        #house-elevator-container {
-            width: 50%;
-        }
-
-    </style>
 </head>
 <body>
 
 
 <div class="contain">
     <div class="fixWidth">
-        <div class="nav">
-            <h1>mobileSelect Demo</h1>
+        <div class="navigation">
+            <h1>mobileWindow Demo</h1>
         </div>
         <div class="demo">
             <div id="trigger1">单项选择</div>
@@ -44,15 +29,15 @@
             <div id="trigger3">多项选择</div>
             <div id="trigger4">地区选择-级联</div>
             <div id="trigger5">车型选择-级联</div>
+            <div id="trigger-input">输入内容</div>
+            <div id="month-amount-wrapper">输入金额（验证输入内容）</div>
             <div id="trigger6" class="trigger-tag-selector">
                 <div id="house-floor-container">楼层</div>
                 <div id="house-elevator-container">电梯</div>
             </div>
         </div>
     </div>
-
 </div>
-
 
 <script type="text/javascript">
 
@@ -214,9 +199,12 @@ var UplinkData =
 
 
 //----------------------------------------------------------
-//更多参数详情可查看文档 https://github.com/onlyhom/mobileSelect.js
+//更多参数详情可查看文档 https://github.com/wohuifude123/mobileWindow
 
 /**
+ * 无标签选择框
+ *
+ *
  * 参数说明
  * @param trigger(必填参数) 触发对象的id/class/tag
  * @param wheels(必填参数)  数据源,需要显示的数据
@@ -225,9 +213,8 @@ var UplinkData =
  * @param callback 选择成功后触发的回调函数，返回indexArr(选中的选项索引)、data(选中的数据)
  * @param transitionEnd 每一次手势滑动结束后触发的回调函数,返回indexArr(当前选中的选项索引)、data(选中的数据)
  * @param keyMap 字段名映射
- */
-
-/**
+ *
+ *
  * 函数说明(实例化之后才可用)
  * @function setTitle()      参数 string                 设置控件的标题
  * @function updateWheel()   参数 sliderIndex, data      重新渲染指定的轮子(可用于先实例化，后通过ajax获取数据的场景)
@@ -236,8 +223,6 @@ var UplinkData =
  * @function show()          参数 无参                   唤起弹窗组件
  * @function getValue()      参数 无参                   获取组件选择的值
  */
-
-
 
 var MobileWindow1 = new MobileWindow({
     trigger: '#trigger1',
@@ -251,6 +236,7 @@ var MobileWindow1 = new MobileWindow({
     },
     callback:function(indexArr, data){
         console.log(data);
+        document.getElementById('trigger1').innerHTML = data[0];
     }
 });
 
@@ -268,6 +254,7 @@ var MobileWindow2 = new MobileWindow({
     },
     callback:function(indexArr, data){
         console.log(data);
+        document.getElementById('trigger2').innerHTML = data.join('/');
     }
 });
 
@@ -288,6 +275,7 @@ var MobileWindow3 = new MobileWindow({
     },
     callback:function(indexArr, data){
         console.log(data);
+        document.getElementById('trigger3').innerHTML = data.join('/');
     }
 });
 
@@ -320,6 +308,12 @@ var MobileWindow4 = new MobileWindow({
     },
     callback:function(indexArr, data){
         console.log(data);
+        var arrData = [];
+        data.forEach(function(item, index){
+            arrData[index] = item['value']
+        });
+        // console.log(arrData);
+        document.getElementById('trigger4').innerHTML = arrData.join('/');
     }
 });
 
@@ -336,12 +330,121 @@ var MobileWindow5 = new MobileWindow({
     },
     callback:function(indexArr, data){
         console.log(data);
+        var arrData = [];
+        data.forEach(function(item, index){
+            arrData[index] = item['value']
+        });
+        // console.log(arrData);
+        document.getElementById('trigger5').innerHTML = arrData.join('/');
     }
 });
 
 
+/**
+ * 无标签输入框
+ *
+ *
+ * 参数说明
+ * @param trigger(必填参数) object
+ * @param wheels(必填参数)  数据源,需要显示的数据
+ * @param title 控件标题
+ * @param position 初始化定位
+ * @param callback 选择成功后触发的回调函数，返回indexArr(选中的选项索引)、data(选中的数据)
+ * @param transitionEnd 每一次手势滑动结束后触发的回调函数,返回indexArr(当前选中的选项索引)、data(选中的数据)
+ * @param keyMap 字段名映射
+ * @param inputTrim 输入内容去除前后空格,
+ * @param inputCheckType: 输入内容验证是否某种类型
+ *
+ *
+ * 函数说明(实例化之后才可用)
+ * @function setTitle()      参数 string                 设置控件的标题
+ * @function updateWheel()   参数 sliderIndex, data      重新渲染指定的轮子(可用于先实例化，后通过ajax获取数据的场景)
+ * @function updateWheels()  参数 data                   重新渲染所有轮子,仅限级联数据格式使用(可用于先实例化，后通过ajax获取数据的场景)
+ * @function locatePosition() 参数 sliderIndex, posIndex  传入位置数组，重定位轮子的位置
+ * @function show()          参数 无参                   唤起弹窗组件
+ * @function getValue()      参数 无参
+ */
+var mobileWindowInput = new MobileWindow({
+    // trigger: '#lease-type-trigger',
+    // title: '租房类型选项',
+    trigger: {
+        type: 'input',
+        element: '#trigger-input',
+    },
+    title: '请输入内容',
+    transitionEnd:function(indexArr, data){
+        //console.log(data);
+    },
+    callback:function(data){
+        console.log(data);
+        // mobileWindowRental.validateRegex(123);
+        // if(regInt.test(data.valueInput)) {
+        document.getElementById('trigger-input').innerHTML = data['valueInput']
+
+    }
+});
+
+
+var mobileWindowRental = new MobileWindow({
+    // trigger: '#lease-type-trigger',
+    // title: '租房类型选项',
+    trigger: {
+        type: 'input',
+        element: '#month-amount-wrapper',
+    },
+    title: '请输入金额',
+    inputTrim: true,
+    inputCheckType: ['number'],
+    transitionEnd:function(indexArr, data){
+        //console.log(data);
+    },
+    callback:function(data){
+        console.log(data);
+        // mobileWindowRental.validateRegex(123);
+        // if(regInt.test(data.valueInput)) {
+        if(data['checkType'][0]) {
+            document.getElementById('month-amount-wrapper').style.color = '#000000';
+            document.getElementById('month-amount-wrapper').innerHTML = data.valueInput;
+        } else {
+            var strPrompt = '请填写整数';
+            document.getElementById('month-amount-wrapper').style.color = '#000000';
+            document.getElementById('month-amount-wrapper').innerHTML = strPrompt;
+        }
+
+    }
+});
 
 /**
+ * 有标签弹框
+ *
+ *
+ * 参数说明
+ * @param trigger(必填参数) 触发对象的object
+ * @param title 控件标题
+ * @param position 初始化定位
+ * @param callback 选择成功后触发的回调函数，返回indexArr(选中的选项索引)、data(选中的数据)
+ * @param transitionEnd 每一次手势滑动结束后触发的回调函数,返回indexArr(当前选中的选项索引)、data(选中的数据)
+ * @param keyMap 字段名映射
+ *
+ *
+ * 函数说明(实例化之后才可用)
+ * @function setTitle()      参数 string                 设置控件的标题
+ * @function updateWheel()   参数 sliderIndex, data      重新渲染指定的轮子(可用于先实例化，后通过ajax获取数据的场景)
+ * @function updateWheels()  参数 data                   重新渲染所有轮子,仅限级联数据格式使用(可用于先实例化，后通过ajax获取数据的场景)
+ * @function locatePosition() 参数 sliderIndex, posIndex  传入位置数组，重定位轮子的位置
+ * @function show()          参数 无参                   唤起弹窗组件
+ * @function getValue()      参数 无参
+ */
+
+/**
+ * trigger 属性说明
+ *
+ * type 标签类型
+ * element 使用该标签的元素,
+ * tags 标签标题
+ */
+
+ /**
  * 层数、电梯
  */
 
@@ -352,7 +455,6 @@ var floorNeed = 53; // 共50层
 for(var iFloor = 0; iFloor<floorNeed; iFloor++) {
     floorArr[iFloor] = iFloor-2 + '层';
 }
-
 
 for(var iFloor = 0; iFloor<floorNeed-3; iFloor++) {
     floorTotalArr[iFloor] = '共' + (iFloor+1) +'层';
@@ -369,7 +471,6 @@ var arrTypes = [arrHouseFloor, arrHouseElevator];
 var mobileSelectFloorElevator = new MobileWindow({
     // trigger: '#lease-type-trigger',
     // title: '租房类型选项',
-
     trigger: {
         type: ['select', 'select'],
         element: ['#house-floor-container', '#house-elevator-container'],
@@ -381,7 +482,7 @@ var mobileSelectFloorElevator = new MobileWindow({
             data: arrTypes,
         },
     ],
-    position:[0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+    position:[0, 0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
     transitionEnd:function(indexArr, data){
         //console.log(data);
     },
