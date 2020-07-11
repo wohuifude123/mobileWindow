@@ -28,14 +28,14 @@
 
 真实项目体验，手机端请打开：[链接](http://www.xinlizhiyouni.com/mobile/house/add.html)
 
-可能因为账号问题，某些同学无法看全功能，可以在本代码库的demo目中查看所有的功能
- 
+可能因为账号问题，某些同学无法看全功能，可以在本代码库的[demo](https://github.com/wohuifude123/mobileWindow/blob/master/demo)目录中查看所有的功能
+
 ## 引入
 
 #### 方式一 标签引入：
 ```html
-<link rel="stylesheet" type="text/css" href="mobile_window/index.css">
-<script src="mobile_window/index.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="assets/styles/mobileWindow.css">
+<script src="assets/scripts/mobileWindow.js" type="text/javascript"></script>
 ```
 
 #### 方式二 npm：
@@ -407,7 +407,7 @@ var mySelect = new MobileSelect({
 callback回调函数里有一个indexArr参数，它是一个数组，记录着当前选中的位置：    
 把这个数组转化为字符串之后，可以用<input type="hidden" value="">隐藏域或者别的其他方式保存下来，传给后台。    
 下次打开页面时，    
-MobileSelect实例化的时候，读取这个字符串，再转成数组，传给position，完成初始化定位即可。    
+MobileWindow实例化的时候，读取这个字符串，再转成数组，传给position，完成初始化定位即可。
 
 
 ## 项目demo：
