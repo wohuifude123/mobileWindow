@@ -49,7 +49,7 @@ npm install mobile-window -D
 import MobileWindow from 'mobile-window'
 ```
 
-## 快速使用
+## 快速使用 - 选择框
 
 #### ①普通数组格式-非联动
 ```html
@@ -220,7 +220,67 @@ npm install mobile-select -D
 </script>
 ```
 
+## 快速使用 - 输入框
 
+#### 输入内容
+```html
+<div id="trigger-input"></div>
+
+var mobileWindowInput = new MobileWindow({
+    // trigger: '#lease-type-trigger',
+    // title: '租房类型选项',
+    trigger: {
+        type: 'input',
+        element: '#trigger-input',
+    },
+    title: '请输入内容',
+    transitionEnd:function(indexArr, data){
+        //console.log(data);
+    },
+    callback:function(data){
+        console.log(data);
+        // mobileWindowRental.validateRegex(123);
+        // if(regInt.test(data.valueInput)) {
+        document.getElementById('trigger-input').innerHTML = data['valueInput']
+
+    }
+});
+
+```
+
+#### 输入内容 - 验证内容格式
+```html
+<div id="month-amount-wrapper"></div>
+
+var mobileWindowRental = new MobileWindow({
+    // trigger: '#lease-type-trigger',
+    // title: '租房类型选项',
+    trigger: {
+        type: 'input',
+        element: '#month-amount-wrapper',
+    },
+    title: '请输入金额',
+    inputTrim: true,
+    inputCheckType: ['number'],
+    transitionEnd:function(indexArr, data){
+        //console.log(data);
+    },
+    callback:function(data){
+        console.log(data);
+        // mobileWindowRental.validateRegex(123);
+        // if(regInt.test(data.valueInput)) {
+        if(data['checkType'][0]) {
+            document.getElementById('month-amount-wrapper').style.color = '#000000';
+            document.getElementById('month-amount-wrapper').innerHTML = data.valueInput;
+        } else {
+            var strPrompt = '请填写整数';
+            document.getElementById('month-amount-wrapper').style.color = '#000000';
+            document.getElementById('month-amount-wrapper').innerHTML = strPrompt;
+        }
+
+    }
+});
+```
 
 ## 参数
 
@@ -297,10 +357,6 @@ var mySelect = new MobileSelect({
 ```
 基础实例 → 功能函数操作后
 
-![基础实例](https://github.com/onlyhom/img-folder/blob/master/QQscreenshot/before20170306234037.png?raw=true)
-![功能函数操作后](https://github.com/onlyhom/img-folder/blob/master/QQscreenshot/after-20170306233954.png?raw=true)
-
-
 #### ②ajax异步填充数据demo
 
 ```html
@@ -353,9 +409,6 @@ var mySelect = new MobileSelect({
     });
 </script>
 </script>
-
-
-
 
 <!-- ************ 级联格式 ************ -->
 
