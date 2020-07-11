@@ -49,7 +49,7 @@ npm install mobile-window -D
 import MobileWindow from 'mobile-window'
 ```
 
-## 选择框（无标签）-快速使用
+## 选择框（无标签）- 快速使用
 
 #### ①普通数组格式-非联动
 ```html
@@ -282,7 +282,7 @@ var mobileWindowRental = new MobileWindow({
 });
 ```
 
-## 选择框（有标签）-快速使用
+## 选择框（有标签）- 快速使用
 ```html
 <div id="trigger6" class="trigger-tag-selector">
     <div id="house-floor-container">楼层</div>
