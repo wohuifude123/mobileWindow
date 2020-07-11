@@ -49,7 +49,7 @@ npm install mobile-window -D
 import MobileWindow from 'mobile-window'
 ```
 
-## 快速使用 - 选择框
+## 选择框（无标签）-快速使用
 
 #### ①普通数组格式-非联动
 ```html
@@ -220,7 +220,7 @@ npm install mobile-select -D
 </script>
 ```
 
-## 快速使用 - 输入框
+## 输入框（无标签）- 快速使用
 
 #### 输入内容
 ```html
@@ -281,6 +281,71 @@ var mobileWindowRental = new MobileWindow({
     }
 });
 ```
+
+## 选择框（有标签）-快速使用
+```html
+<div id="trigger6" class="trigger-tag-selector">
+    <div id="house-floor-container">楼层</div>
+    <div id="house-elevator-container">电梯</div>
+</div>
+```
+
+```js
+var floorArr = [];
+var floorTotalArr = [];
+
+var floorNeed = 53; // 共50层
+for(var iFloor = 0; iFloor<floorNeed; iFloor++) {
+    floorArr[iFloor] = iFloor-2 + '层';
+}
+
+for(var iFloor = 0; iFloor<floorNeed-3; iFloor++) {
+    floorTotalArr[iFloor] = '共' + (iFloor+1) +'层';
+}
+
+var arrHouseFloor = [
+    floorArr,
+    floorTotalArr,
+];
+
+var arrHouseElevator = ['有电梯', '无电梯'];
+
+var arrTypes = [arrHouseFloor, arrHouseElevator];
+var mobileSelectFloorElevator = new MobileWindow({
+    // trigger: '#lease-type-trigger',
+    // title: '租房类型选项',
+    trigger: {
+        type: ['select', 'select'],
+        element: ['#house-floor-container', '#house-elevator-container'],
+        tags:['楼层', '电梯'],
+    },
+    title: ['请选择楼层', '请选择电梯'],
+    wheels: [
+        {
+            data: arrTypes,
+        },
+    ],
+    position:[0, 0], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+    transitionEnd:function(indexArr, data){
+        //console.log(data);
+    },
+    beforeCreate: function() {
+
+    },
+    created: function () {
+        // `this` 指向 vm 实例
+        console.log('a is: ' + this.a)
+    },
+    beforeMount: function() {
+
+    },
+    callback: function(tagIndex, indexArr, data){
+        console.log(tagIndex, '/', indexArr, '/', data);
+
+    }
+});
+```
+
 
 ## 参数
 
